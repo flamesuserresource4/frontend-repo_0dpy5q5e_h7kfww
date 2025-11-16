@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function Badge({ children }) {
   return (
@@ -61,16 +62,16 @@ function Header() {
               className="w-full rounded-xl border-2 border-teal-100 focus:border-[#00AC97] outline-none px-4 py-2.5 text-sm text-[#0a4f47] placeholder:text-[#6c9a94] bg-white"
               aria-label="بحث"
             />
-            <Icon name="search" className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 fill-[#4d7a74]" />
+            <svg viewBox="0 0 512 512" className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 fill-[#4d7a74]" aria-hidden="true"><path d={'M55 237c-30-30-30-79 0-109s79-30 109 0c26 26 29 65 11 95l66 66-23 23-66-66c-30 18-69 15-95-11z'} /></svg>
           </div>
 
           {/* Social */}
           <div className="flex items-center gap-3 text-[#3d6f69]">
-            <a href="#" className="grid place-items-center w-9 h-9 rounded-lg border border-teal-200 hover:bg-teal-50 transition"><Icon name="twitter" className="w-4 h-4 fill-current" /></a>
-            <a href="#" className="grid place-items-center w-9 h-9 rounded-lg border border-teal-200 hover:bg-teal-50 transition"><Icon name="facebook" className="w-4 h-4 fill-current" /></a>
-            <a href="#" className="grid place-items-center w-9 h-9 rounded-lg border border-teal-200 hover:bg-teal-50 transition"><Icon name="linkedin" className="w-4 h-4 fill-current" /></a>
-            <a href="#" className="grid place-items-center w-9 h-9 rounded-lg border border-teal-200 hover:bg-teal-50 transition"><Icon name="instagram" className="w-4 h-4 fill-current" /></a>
-            <a href="#" className="grid place-items-center w-9 h-9 rounded-lg border border-teal-200 hover:bg-teal-50 transition"><Icon name="youtube" className="w-4 h-4 fill-current" /></a>
+            <a href="#" className="grid place-items-center w-9 h-9 rounded-lg border border-teal-200 hover:bg-teal-50 transition"><svg viewBox="0 0 512 512" className="w-4 h-4 fill-current" aria-hidden="true"><path d={'M459 151c-12 6-25 10-39 12 14-8 24-21 29-36-13 8-28 14-43 17-12-12-29-20-48-20-36 0-66 29-66 66 0 5 1 11 2 16-55-3-103-29-135-69-6 10-10 21-10 34 0 23 12 44 29 56-11 0-21-3-31-8 0 0 0 1 0 1 0 32 23 58 53 64-6 2-12 3-19 3-4 0-9 0-13-1 9 27 35 47 66 47-24 19-55 30-88 30-6 0-12 0-18-1 31 20 68 31 108 31 129 0 200-107 200-200 0-3 0-6 0-8 14-10 26-23 36-37z'} /></svg></a>
+            <a href="#" className="grid place-items-center w-9 h-9 rounded-lg border border-teal-200 hover:bg-teal-50 transition"><svg viewBox="0 0 512 512" className="w-4 h-4 fill-current" aria-hidden="true"><path d={'M279 288l14-89h-88v-58c0-24 12-47 50-47h39v-76s-35-6-69-6c-70 0-116 42-116 118v69h-78v89h78v216h94v-216h76z'} /></svg></a>
+            <a href="#" className="grid place-items-center w-9 h-9 rounded-lg border border-teal-200 hover:bg-teal-50 transition"><svg viewBox="0 0 512 512" className="w-4 h-4 fill-current" aria-hidden="true"><path d={'M100 160h80v240h-80zm40-120c-26 0-48 22-48 48s22 48 48 48 48-22 48-48-22-48-48-48zm120 120h76v34h1c11-21 39-43 80-43 85 0 100 56 100 129v120h-80v-106c0-25 0-57-35-57-35 0-40 27-40 55v108h-80v-240z'} /></svg></a>
+            <a href="#" className="grid place-items-center w-9 h-9 rounded-lg border border-teal-200 hover:bg-teal-50 transition"><svg viewBox="0 0 512 512" className="w-4 h-4 fill-current" aria-hidden="true"><path d={'M224 202c-36 0-66 30-66 66s30 66 66 66 66-30 66-66-30-66-66-66zm124-41c0-17-14-31-31-31h-186c-17 0-31 14-31 31v186c0 17 14 31 31 31h186c17 0 31-14 31-31v-186zm-31-91c35 0 64 29 64 64v186c0 35-29 64-64 64h-186c-35 0-64-29-64-64v-186c0-35 29-64 64-64h186z'} /></svg></a>
+            <a href="#" className="grid place-items-center w-9 h-9 rounded-lg border border-teal-200 hover:bg-teal-50 transition"><svg viewBox="0 0 512 512" className="w-4 h-4 fill-current" aria-hidden="true"><path d={'M393 184c-4-15-16-26-31-30-27-7-135-7-135-7s-108 0-135 7c-15 4-27 15-31 30-7 27-7 84-7 84s0 57 7 84c4 15 16 26 31 30 27 7 135 7 135 7s108 0 135-7c15-4 27-15 31-30 7-27 7-84 7-84s 0-57-7-84zm-193 136v-104l90 52-90 52z'} /></svg></a>
           </div>
         </div>
 
@@ -81,6 +82,7 @@ function Header() {
             <li><a className="inline-block py-2.5 hover:text-[#00AC97]" href="#match">اللقاء</a></li>
             <li><a className="inline-block py-2.5 hover:text-[#00AC97]" href="#news">الأخبار</a></li>
             <li><a className="inline-block py-2.5 hover:text-[#00AC97]" href="#gallery">الصور</a></li>
+            <li><Link className="inline-block py-2.5 hover:text-[#00AC97]" to="/annuaire">الدليل</Link></li>
             <li><a className="inline-block py-2.5 hover:text-[#00AC97]" href="#contact">تواصل</a></li>
           </ul>
         </nav>
@@ -123,6 +125,7 @@ function SliderHero({ slides = [], interval = 5000 }) {
             src={s.src}
             alt={s.alt || ''}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === current ? 'opacity-100' : 'opacity-0'}`}
+            loading="lazy"
           />
         ))}
       </div>
@@ -174,6 +177,7 @@ function GalleryItem({ src, alt }) {
         src={src}
         alt={alt}
         className="w-full h-40 md:h-44 object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        loading="lazy"
       />
     </figure>
   )
@@ -182,7 +186,7 @@ function GalleryItem({ src, alt }) {
 function NewsCard({ img, date, title, excerpt, featured = false }) {
   return (
     <article className={`${featured ? 'md:col-span-2' : ''} rounded-2xl border border-teal-100 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.05)] overflow-hidden`}>
-      <img src={img} alt={title} className={`w-full ${featured ? 'h-72' : 'h-56'} object-cover`} />
+      <img src={img} alt={title} className={`w-full ${featured ? 'h-72' : 'h-56'} object-cover`} loading="lazy" />
       <div className="p-4">
         <div className="text-[12px] text-[#5a7f79] mb-1">{date}</div>
         <h3 className={`${featured ? 'text-2xl' : 'text-lg'} font-extrabold text-[#0a4f47] mb-1`}>{title}</h3>
@@ -231,6 +235,7 @@ export default function App() {
               src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=1600&auto=format&fit=crop"
               alt="انطلاق دورة كرة القدم لمجموعة CPH"
               className="w-full h-auto rounded-xl"
+              loading="lazy"
             />
             <figcaption className="text-xs text-[#5a7f79] mt-2 px-1">صورة الغلاف: انطلاق البطولة</figcaption>
           </figure>
@@ -286,7 +291,7 @@ export default function App() {
         <section id="news" className="mt-10">
           <div className="flex items-end justify-between mb-3">
             <h2 className="text-xl md:text-2xl font-black text-[#0a4f47]">آخر الأخبار</h2>
-            <a href="#" className="text-sm font-bold text-[#00AC97] hover:underline">عرض الكل</a>
+            <Link to="/annuaire" className="text-sm font-bold text-[#00AC97] hover:underline">الدليل</Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <NewsCard featured img="https://images.unsplash.com/photo-1504711434969-e338bca99c34?w=1200" date="05-فبراير-2020" title="فوز مثير لفريق HYD 03 على AGR 03" excerpt="تفاصيل اللقاء وأهداف المباراة مع أبرز اللقطات والتحليل الفني." />
