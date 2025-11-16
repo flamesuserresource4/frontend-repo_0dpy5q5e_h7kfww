@@ -1,5 +1,4 @@
-import React from 'react'
-import Spline from '@splinetool/react-spline'
+import React, { useEffect, useMemo, useState } from 'react'
 
 function Badge({ children }) {
   return (
@@ -24,15 +23,75 @@ function Divider() {
   )
 }
 
-function Hero() {
+function Header() {
   return (
-    <div className="relative w-full h-[320px] md:h-[420px] overflow-hidden rounded-2xl ring-1 ring-teal-200/40 shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
-      <div className="absolute inset-0">
-        <Spline scene="https://prod.spline.design/4Tf9WOIaWs6LOezG/scene.splinecode" />
+    <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-teal-100/70" dir="rtl">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+        <a href="#home" className="flex items-center gap-3 group">
+          <span className="grid place-items-center w-9 h-9 rounded-full bg-[#00AC97]/10 text-[#00AC97] font-black border border-[#00AC97]/30 shadow-sm">
+            CPH
+          </span>
+          <div className="leading-tight">
+            <div className="text-sm font-extrabold text-[#0b2e2a] group-hover:text-[#00AC97] transition-colors">مجموعة CPH</div>
+            <div className="text-[11px] text-[#4d7a74]">الصناعات الجزائرية</div>
+          </div>
+        </a>
+        <nav className="hidden sm:flex items-center gap-4 text-[13px] font-bold text-[#0a4f47]">
+          <a href="#home" className="hover:text-[#00AC97]">الرئيسية</a>
+          <a href="#match" className="hover:text-[#00AC97]">المباراة</a>
+          <a href="#gallery" className="hover:text-[#00AC97]">الصور</a>
+          <a href="#contact" className="hover:text-[#00AC97]">تواصل معنا</a>
+        </nav>
       </div>
+    </header>
+  )
+}
+
+function SliderHero({ slides = [], interval = 5000 }) {
+  const [current, setCurrent] = useState(0)
+  const count = slides.length
+
+  useEffect(() => {
+    if (count <= 1) return
+    const id = setInterval(() => {
+      setCurrent((c) => (c + 1) % count)
+    }, interval)
+    return () => clearInterval(id)
+  }, [count, interval])
+
+  const goTo = (i) => setCurrent(((i % count) + count) % count)
+  const next = () => goTo(current + 1)
+  const prev = () => goTo(current - 1)
+
+  const safeSlides = useMemo(() => (
+    slides.length ? slides : [
+      { src: 'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=2000&auto=format&fit=crop', alt: 'ملعب' },
+      { src: 'https://images.unsplash.com/photo-1526841234980-b3c3645c92a3?ixid=M3w3OTkxMTl8MHwxfHNlYXJjaHwxfHwlRDglQjUlRDklODglRDglQjElRDglQTklMjAlRDklODUlRDklODYlMjAlRDglQTclRDklODQlRDklODUlRDglQTglRDglQTclRDglQjElRDglQTclRDglQTl8ZW58MHwwfHx8MTc2MzI2MDYxOXww&ixlib=rb-4.1.0&w=1600&auto=format&fit=crop&q=80', alt: 'مباراة' },
+      { src: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=2000&auto=format&fit=crop', alt: 'جمهور' },
+    ]
+  ), [slides])
+
+  return (
+    <section id="home" className="relative w-full h-[320px] md:h-[420px] overflow-hidden rounded-2xl ring-1 ring-teal-200/40 shadow-[0_10px_30px_rgba(0,0,0,0.08)]" aria-roledescription="carousel" aria-label="صور الغلاف">
+      {/* Slides */}
+      <div className="absolute inset-0">
+        {safeSlides.map((s, i) => (
+          <img
+            key={i}
+            src={s.src}
+            alt={s.alt || ''}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === current ? 'opacity-100' : 'opacity-0'}`}
+          />
+        ))}
+      </div>
+
+      {/* Overlay gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(120%_120%_at_50%_0%,rgba(0,172,151,0.18),transparent_60%)]" aria-hidden="true" />
-      <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 flex items-end justify-between pointer-events-none">
-        <div className="pointer-events-auto" dir="rtl">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" aria-hidden="true" />
+
+      {/* Copy */}
+      <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 flex items-end justify-between">
+        <div className="" dir="rtl">
           <div className="flex items-center gap-2 mb-2">
             <Badge>رياضة</Badge>
             <span className="w-1.5 h-1.5 rounded-full bg-teal-300" />
@@ -43,8 +102,26 @@ function Hero() {
           </h1>
           <p className="text-white/90 font-semibold mt-1">HYD 03 يفوز على AGR 03 بنتيجة 2–1</p>
         </div>
+
+        {/* Controls */}
+        <div className="hidden md:flex items-center gap-2 self-end pb-2">
+          <button onClick={prev} className="pointer-events-auto grid place-items-center w-9 h-9 rounded-full bg-white/80 hover:bg-white text-[#0a4f47] border border-teal-200 shadow-sm" aria-label="السابق">‹</button>
+          <button onClick={next} className="pointer-events-auto grid place-items-center w-9 h-9 rounded-full bg-white/80 hover:bg-white text-[#0a4f47] border border-teal-200 shadow-sm" aria-label="التالي">›</button>
+        </div>
       </div>
-    </div>
+
+      {/* Dots */}
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5">
+        {safeSlides.map((_, i) => (
+          <button
+            key={i}
+            aria-label={`انتقال إلى الشريحة ${i + 1}`}
+            onClick={() => goTo(i)}
+            className={`w-2.5 h-2.5 rounded-full transition-all ${i === current ? 'bg-white shadow ring-2 ring-[#00AC97]' : 'bg-white/60 hover:bg-white/90'}`}
+          />
+        ))}
+      </div>
+    </section>
   )
 }
 
@@ -61,11 +138,21 @@ function GalleryItem({ src, alt }) {
 }
 
 export default function App() {
+  const heroSlides = [
+    { src: 'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=2000&auto=format&fit=crop', alt: 'صورة من المباراة' },
+    { src: 'https://images.unsplash.com/photo-1526841234980-b3c3645c92a3?ixid=M3w3OTkxMTl8MHwxfHNlYXJjaHwxfHwlRDglQjUlRDklODglRDglQjElRDglQTklMjAlRDklODUlRDklODYlMjAlRDglQTclRDklODQlRDklODUlRDglQTglRDglQTclRDglQjElRDglQTclRDglQTl8ZW58MHwwfHx8MTc2MzI2MDYxOXww&ixlib=rb-4.1.0&w=1600&auto=format&fit=crop&q=80', alt: 'تسديدة نحو المرمى' },
+    { src: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=2000&auto=format&fit=crop', alt: 'فرحة اللاعبين' },
+    { src: 'https://images.unsplash.com/photo-1471295253337-3ceaaedca402?q=80&w=2000&auto=format&fit=crop', alt: 'كرة على خط التماس' },
+  ]
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-teal-50/40 to-white selection:bg-[#00AC97]/20 selection:text-[#0b2e2a]" dir="rtl" lang="ar">
+      {/* Header */}
+      <Header />
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 md:py-10">
-        {/* Hero with Spline */}
-        <Hero />
+        {/* Hero slider */}
+        <SliderHero slides={heroSlides} />
 
         {/* Meta row */}
         <div className="flex flex-wrap items-center gap-2 text-[13px] text-[#407c74] mt-4 md:mt-6">
@@ -76,7 +163,7 @@ export default function App() {
           <a href="mailto:cphitm@gmail.com" className="underline decoration-dotted hover:text-[#00AC97]">cphitm@gmail.com</a>
         </div>
 
-        {/* Featured image (optional inline) */}
+        {/* Featured image */}
         <section className="mt-5">
           <figure className="rounded-2xl border border-teal-100 bg-white p-2 shadow-sm">
             <img
@@ -89,7 +176,7 @@ export default function App() {
         </section>
 
         {/* Content grid */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-6">
+        <section id="match" className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-6">
           {/* Match card */}
           <article className="bg-white rounded-2xl border border-teal-100 shadow-[0_8px_30px_rgba(0,0,0,0.05)] p-5">
             <div className="flex items-center justify-between text-[#145c54] font-extrabold">
@@ -122,7 +209,7 @@ export default function App() {
           </article>
 
           {/* Gallery */}
-          <aside className="bg-white rounded-2xl border border-teal-100 shadow-[0_8px_30px_rgba(0,0,0,0.05)] p-5">
+          <aside id="gallery" className="bg-white rounded-2xl border border-teal-100 shadow-[0_8px_30px_rgba(0,0,0,0.05)] p-5">
             <h3 className="m-0 mb-3 text-lg font-extrabold text-[#0a4f47]">معرض الصور</h3>
             <div className="grid grid-cols-2 md:grid-cols-2 gap-3" role="list" aria-label="صور المباراة">
               <GalleryItem src="https://images.unsplash.com/photo-1471295253337-3ceaaedca402?q=80&w=800&auto=format&fit=crop" alt="لقطة من المباراة 1" />
